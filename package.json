@@ -1,20 +1,19 @@
 {
-  "name": "shed-handsome-static",
+  "name": "shed-hs-static",
   "version": "9.0.1",
-  "description": "shed-handsome-static",
+  "description": "shed-hs-static",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shedya/shed-handsome-static.git"
+    "url": "git+https://github.com/shedya/shed-hs-static.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/shedya/shed-handsome-static/issues"
+    "url": "https://github.com/shedya/shed-hs-static/issues"
   },
-  "homepage": "https://github.com/shedya/shed-handsome-static#readme"
-
+  "homepage": "https://github.com/shedya/shed-hs-static#readme"
 }
