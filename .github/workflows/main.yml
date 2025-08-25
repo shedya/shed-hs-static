@@ -34,7 +34,11 @@ jobs:
         run: |
           NEW_VERSION=$(date +'%Y.%-m.%-d')
           npm version $NEW_VERSION --no-git-tag-version
-          git add package.json
+          
+          # Update README.md with new version
+          sed -i "s|shed-hs-static@[0-9]\{4\}\.[0-9]\{1,2\}\.[0-9]\{1,2\}|shed-hs-static@$NEW_VERSION|g" README.md
+          
+          git add package.json README.md
           git commit -m "Bump version to $NEW_VERSION"
           git push
       
