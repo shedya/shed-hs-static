@@ -104,8 +104,8 @@ jobs:
               fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
             "
             
-            # Update README.md with new version (match any existing version pattern)
-            sed -i "s|shed-hs-static@[^/]*|shed-hs-static@$NEW_VERSION|g" README.md
+            # Update README.md with new version (only replace specific version numbers, not 'latest')
+            sed -i "s|shed-hs-static@[0-9]\{4\}\.[0-9]\{1,2\}\.[0-9]\{1,2\}[-\.][0-9]\+|shed-hs-static@$NEW_VERSION|g" README.md
             
             git add package.json README.md
             git commit -m "Bump version to $NEW_VERSION"
