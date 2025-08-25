@@ -15,5 +15,9 @@ https://cdn.iocdn.cc/npm/shed-hs-static@latest/10.1.0/
 ```
 
 ```
+https://cdn.smartcis.cn/npm/shed-hs-static@latest/10.1.0/
+```
+
+```
 https://unpkg.com//shed-hs-static@latest/10.1.0/
 ```
