@@ -19,7 +19,7 @@ https://cdn.smartcis.cn/npm/shed-hs-static@latest/10.1.0/
 ```
 
 ```
-https://unpkg.com//shed-hs-static@latest/10.1.0/
+https://unpkg.com/shed-hs-static@latest/10.1.0/
 ```
 
 或者指定版本
@@ -41,5 +41,5 @@ https://cdn.smartcis.cn/npm/shed-hs-static@2025.8.26-9/10.1.0/
 ```
 
 ```
-https://unpkg.com//shed-hs-static@2025.8.26-9/10.1.0/
+https://unpkg.com/shed-hs-static@2025.8.26-9/10.1.0/
 ```
