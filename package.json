@@ -1,6 +1,6 @@
 {
   "name": "shed-hs-static",
-  "version": "2025.8.2-6.1",
+  "version": "2025.8.26.7",
   "description": "shed-hs-static",
   "main": "index.js",
   "scripts": {
