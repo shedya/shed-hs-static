@@ -39,25 +39,42 @@ jobs:
           BASE_VERSION="$YEAR.$MONTH.$DAY"
           CURRENT_VERSION=$(node -p "require('./package.json').version")
           
-          # Check if current version starts with today's date
-          if [[ "$CURRENT_VERSION" == "$BASE_VERSION"* ]]; then
-            # Extract build number or set to 1 if no build number exists
-            if [[ "$CURRENT_VERSION" == "$BASE_VERSION" ]]; then
-              BUILD_NUM=1
-            else
-              BUILD_NUM=$(echo "$CURRENT_VERSION" | sed "s/$BASE_VERSION\.//" | sed 's/[^0-9]//g')
-              BUILD_NUM=$((BUILD_NUM + 1))
-            fi
-            NEW_VERSION="$BASE_VERSION.$BUILD_NUM"
+          # Get the latest build number from npm registry for today's date
+          echo "Checking npm registry for existing versions of $BASE_VERSION..."
+          
+          # Get all versions from npm and find the highest build number for today
+          LATEST_BUILD=0
+          if npm view shed-hs-static versions --json 2>/dev/null | grep -q "$BASE_VERSION"; then
+            # Extract all versions that match today's date pattern
+            VERSIONS=$(npm view shed-hs-static versions --json 2>/dev/null | grep -o "$BASE_VERSION\(\.[0-9]\+\)\?" | sort -V)
+            
+            for version in $VERSIONS; do
+              if [[ "$version" == "$BASE_VERSION" ]]; then
+                BUILD=0
+              else
+                BUILD=$(echo "$version" | sed "s|^$BASE_VERSION\.||")
+                if [[ "$BUILD" =~ ^[0-9]+$ ]]; then
+                  if [[ $BUILD -gt $LATEST_BUILD ]]; then
+                    LATEST_BUILD=$BUILD
+                  fi
+                fi
+              fi
+            done
+          fi
+          
+          # Set new version with incremented build number
+          NEW_BUILD=$((LATEST_BUILD + 1))
+          if [[ $NEW_BUILD -eq 1 ]]; then
+            NEW_VERSION="$BASE_VERSION.1"
           else
-            NEW_VERSION="$BASE_VERSION"
+            NEW_VERSION="$BASE_VERSION.$NEW_BUILD"
           fi
           
           echo "Setting version to: $NEW_VERSION"
           npm version $NEW_VERSION --no-git-tag-version
           
-          # Update README.md with new version
-          sed -i "s|shed-hs-static@[0-9]\{4\}\.[0-9]\{1,2\}\.[0-9]\{1,2\}\(\.[0-9]\+\)\?|shed-hs-static@$NEW_VERSION|g" README.md
+          # Update README.md with new version (match any existing version pattern)
+          sed -i "s|shed-hs-static@[^/]*|shed-hs-static@$NEW_VERSION|g" README.md
           
           git add package.json README.md
           git commit -m "Bump version to $NEW_VERSION"
