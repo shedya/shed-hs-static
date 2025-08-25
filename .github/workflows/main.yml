@@ -9,12 +9,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
+      
+      # Configure git user
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+      
+      # Install dependencies
       - run: npm i
+      
+      # Bump version using current date format
+      - name: Bump version
+        run: |
+          NEW_VERSION=$(date +'%Y.%-m.%-d')
+          npm version $NEW_VERSION --no-git-tag-version
+          git add package.json
+          git commit -m "Bump version to $NEW_VERSION"
+          git push
+      
+      # Publish to npm
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
