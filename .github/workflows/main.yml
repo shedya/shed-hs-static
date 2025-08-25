@@ -53,11 +53,12 @@ jobs:
               echo "Detected malformed version $CURRENT_VERSION with build number $BUILD_PART"
             fi
           elif [[ "$CURRENT_VERSION" == "$BASE_VERSION"* ]]; then
-            # Handle normal versions for today's date
+            # Handle normal versions for today's date (both dot and dash formats)
             if [[ "$CURRENT_VERSION" == "$BASE_VERSION" ]]; then
               CURRENT_BUILD=0
             else
-              BUILD_PART=$(echo "$CURRENT_VERSION" | sed "s|^$BASE_VERSION\.||")
+              # Handle both .X and -X formats
+              BUILD_PART=$(echo "$CURRENT_VERSION" | sed "s|^$BASE_VERSION[-\.]||")
               if [[ "$BUILD_PART" =~ ^[0-9]+$ ]]; then
                 CURRENT_BUILD=$BUILD_PART
               fi
@@ -67,14 +68,15 @@ jobs:
           # Get all versions from npm and find the highest build number for today
           LATEST_BUILD=$CURRENT_BUILD
           if npm view shed-hs-static versions --json 2>/dev/null | grep -q "$BASE_VERSION"; then
-            # Extract all versions that match today's date pattern
-            VERSIONS=$(npm view shed-hs-static versions --json 2>/dev/null | grep -o "$BASE_VERSION\(\.[0-9]\+\)\?" | sort -V)
+            # Extract all versions that match today's date pattern (both dot and dash formats)
+            VERSIONS=$(npm view shed-hs-static versions --json 2>/dev/null | grep -o "$BASE_VERSION\([-\.][0-9]\+\)\?" | sort -V)
             
             for version in $VERSIONS; do
               if [[ "$version" == "$BASE_VERSION" ]]; then
                 BUILD=0
               else
-                BUILD=$(echo "$version" | sed "s|^$BASE_VERSION\.||")
+                # Handle both .X and -X formats
+                BUILD=$(echo "$version" | sed "s|^$BASE_VERSION[-\.]||")
                 if [[ "$BUILD" =~ ^[0-9]+$ ]]; then
                   if [[ $BUILD -gt $LATEST_BUILD ]]; then
                     LATEST_BUILD=$BUILD
@@ -84,9 +86,9 @@ jobs:
             done
           fi
           
-          # Set new version with incremented build number
+          # Set new version with incremented build number (using dash format)
           NEW_BUILD=$((LATEST_BUILD + 1))
-          NEW_VERSION="$BASE_VERSION.$NEW_BUILD"
+          NEW_VERSION="$BASE_VERSION-$NEW_BUILD"
           
           echo "Current version: $CURRENT_VERSION"
           echo "New version: $NEW_VERSION"
