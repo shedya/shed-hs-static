@@ -32,7 +32,11 @@ jobs:
       # Bump version using current date format with build number (Beijing time)
       - name: Bump version
         run: |
-          BASE_VERSION=$(TZ='Asia/Shanghai' date +'%Y.%-m.%-d')
+          # Generate date in Beijing timezone and format properly
+          YEAR=$(TZ='Asia/Shanghai' date +'%Y')
+          MONTH=$(TZ='Asia/Shanghai' date +'%m' | sed 's/^0*//')
+          DAY=$(TZ='Asia/Shanghai' date +'%d' | sed 's/^0*//')
+          BASE_VERSION="$YEAR.$MONTH.$DAY"
           CURRENT_VERSION=$(node -p "require('./package.json').version")
           
           # Check if current version starts with today's date
