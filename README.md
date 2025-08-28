@@ -25,21 +25,21 @@ https://unpkg.com/shed-hs-static@latest/10.1.0/
 或者指定版本
 
 ```
-https://cdn.jsdmirror.com/npm/shed-hs-static@2025.8.28-1/10.1.0/
+https://cdn.jsdmirror.com/npm/shed-hs-static@2025.8.28-2/10.1.0/
 ```
 
 ```
-https://jsdelivr.topthink.com/npm/shed-hs-static@2025.8.28-1/10.1.0/
+https://jsdelivr.topthink.com/npm/shed-hs-static@2025.8.28-2/10.1.0/
 ```
 
 ```
-https://cdn.iocdn.cc/npm/shed-hs-static@2025.8.28-1/10.1.0/
+https://cdn.iocdn.cc/npm/shed-hs-static@2025.8.28-2/10.1.0/
 ```
 
 ```
-https://cdn.smartcis.cn/npm/shed-hs-static@2025.8.28-1/10.1.0/
+https://cdn.smartcis.cn/npm/shed-hs-static@2025.8.28-2/10.1.0/
 ```
 
 ```
-https://unpkg.com/shed-hs-static@2025.8.28-1/10.1.0/
+https://unpkg.com/shed-hs-static@2025.8.28-2/10.1.0/
 ```
